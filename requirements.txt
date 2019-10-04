@@ -1,0 +1,9 @@
+tensorflow_gpu==1.14
+numpy
+tqdm
+fire
+absl-py
+calamari_ocr
+opencv-python
+shapely
+tensorflow-serving-api==1.14
