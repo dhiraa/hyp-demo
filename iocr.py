@@ -41,10 +41,10 @@ def east(image_file_path, out_dir, model_dir="models/vf_east_models/east/EASTIEs
                              ratio_h=ratio_h,
                              ratio_w=ratio_w)
 
-def get_text_file(cropped_image_dir, out_file_path):
+def get_text_file(pred_text_dir, out_file_path):
     lines = []
 
-    in_files = get_all_input_files(source_dir=cropped_image_dir,
+    in_files = get_all_input_files(source_dir=pred_text_dir,
                                    input_files_types=[".txt"])
 
 
@@ -87,7 +87,7 @@ def ocr(in_file_path, temp_dir="/tmp/ocr/"):
     calamari(source_dir=OUT_DIR + file_name_base + "/cropped/",
              destination_dir=OUT_DIR + file_name_base + "/text")
 
-    ret = get_text_file(cropped_image_dir=OUT_DIR + file_name_base + "/text",
+    ret = get_text_file(pred_text_dir=OUT_DIR + file_name_base + "/text",
                         out_file_path=OUT_DIR + file_name_base + ".txt")
 
     print(ret)
