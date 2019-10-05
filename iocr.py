@@ -93,6 +93,7 @@ def ocr(in_file_path, temp_dir="/tmp/ocr/"):
     print(ret)
     return ret
 
+
 if __name__ == '__main__':
     fire.Fire(ocr)
 

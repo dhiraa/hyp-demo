@@ -12,7 +12,8 @@ from calamari_ocr.ocr.datasets import DataSetType
 from calamari_ocr.scripts.predict import run as calamari_ocr_run
 
 calamari_models = ['models/calamari_models/model_00117200.ckpt',
-                   'models/calamari_models/model_00132600.ckpt']
+                   'models/calamari_models/model_00132600.ckpt',
+                   'models/calamari_models/model_00009800.ckpt']
 
 class CalamariArgs:
     batch_size = 1

@@ -21,7 +21,7 @@ def crop_and_save(cords, image, dest, fname):
     dest_file = os.path.join(dest, fname)
     dest_file = dest_file + ".jpg"
     try:
-        plt.imsave(dest_file, cropped_image, cmap='Greys_r')  # '
+        plt.imsave(dest_file, cropped_image, cmap='Greys_r')
         # print('Saved file to {}'.format(dest_file))
     except:
         print(">>>>>>>>>>>>>> dest : {}".format(dest))
