@@ -78,11 +78,12 @@ def prepare_calamari_dataset_from_icdar(in_path, out_path="cropped", text_file_e
     # for file in tqdm(in_files):
     #     print(file)
     #     crop_to_box(image_file_path=file, destination_dir="cropped")
-    def crop_to_box_(file):
-        crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext)
+    # def crop_to_box_(file):
+    #     crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext)
 
     with multiprocessing.Pool() as p:
-        r = list(tqdm(p.map(crop_to_box_, in_files), total=len(in_files)))
+        r = list(tqdm(p.map(lambda file: crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext),
+                            in_files), total=len(in_files)))
         # p.map(crop_to_box, in_files)
         # map list to target function
         # pool.map(task, multiprocess_list)
