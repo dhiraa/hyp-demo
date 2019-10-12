@@ -33,7 +33,7 @@ def crop_and_save(cords, image, file_path):
         print('>>>>>>>>>>>>>> Missed file to {}'.format(dest_file))
 
 
-def crop_to_box(image_file_path, destination_dir="cropped", text_file_extenstion=".gt.txt"):
+def crop_to_box(image_file_path, destination_dir="cropped", text_file_ext=".gt.txt"):
     try:
         gt_text_file_path = image_file_path.replace(".jpg", ".txt")
         source_image_path = image_file_path
@@ -62,7 +62,7 @@ def crop_to_box(image_file_path, destination_dir="cropped", text_file_extenstion
                     # call fun with cords and images named convention for the cropped image
                     crop_and_save((int(x1), int(x2), int(y1), int(y2)), jpgfile, out_file_path)  # (int(x1)-11, int(x2)+11, int(y1)-4, int(y2)+4
                     count = count + 1
-                    with open(out_file_path+text_file_extenstion, "w") as fd:
+                    with open(out_file_path+text_file_ext, "w") as fd:
                         fd.write(text)
                 except FileNotFoundError as fnf_error:
                     print("error", fnf_error)
@@ -71,16 +71,18 @@ def crop_to_box(image_file_path, destination_dir="cropped", text_file_extenstion
         print(image_file_path)
 
 
-def prepare_calamari_dataset_from_icdar(in_path):
+def prepare_calamari_dataset_from_icdar(in_path, out_path="cropped", text_file_ext=".gt.txt"):
     in_files = get_all_input_files(source_dir=in_path)
 
     # pool = multiprocess.Pool()
     # for file in tqdm(in_files):
     #     print(file)
     #     crop_to_box(image_file_path=file, destination_dir="cropped")
+    def crop_to_box_(file):
+        crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext)
 
     with multiprocessing.Pool() as p:
-        r = list(tqdm(p.map(crop_to_box, in_files), total=len(in_files)))
+        r = list(tqdm(p.map(crop_to_box_, in_files), total=len(in_files)))
         # p.map(crop_to_box, in_files)
         # map list to target function
         # pool.map(task, multiprocess_list)
