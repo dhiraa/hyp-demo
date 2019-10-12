@@ -30,11 +30,10 @@ def crop_and_save(cords, image, file_path):
         plt.imsave(dest_file, cropped_image, cmap='Greys_r')
         # print('Saved file to {}'.format(dest_file))
     except:
-        print(">>>>>>>>>>>>>> dest : {}".format(dest))
         print('>>>>>>>>>>>>>> Missed file to {}'.format(dest_file))
 
 
-def crop_to_box(image_file_path, destination_dir="cropped"):
+def crop_to_box(image_file_path, destination_dir="cropped", text_file_extenstion=".gt.txt"):
     try:
         gt_text_file_path = image_file_path.replace(".jpg", ".txt")
         source_image_path = image_file_path
@@ -63,7 +62,7 @@ def crop_to_box(image_file_path, destination_dir="cropped"):
                     # call fun with cords and images named convention for the cropped image
                     crop_and_save((int(x1), int(x2), int(y1), int(y2)), jpgfile, out_file_path)  # (int(x1)-11, int(x2)+11, int(y1)-4, int(y2)+4
                     count = count + 1
-                    with open(out_file_path+".gt.txt", "w") as fd:
+                    with open(out_file_path+text_file_extenstion, "w") as fd:
                         fd.write(text)
                 except FileNotFoundError as fnf_error:
                     print("error", fnf_error)
