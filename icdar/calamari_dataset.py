@@ -2,7 +2,7 @@ import multiprocessing
 import sys
 import os
 from glob import glob
-
+from functools import partial
 sys.path.append(os.getcwd())
 import fire
 import matplotlib.pyplot as plt
@@ -33,7 +33,7 @@ def crop_and_save(cords, image, file_path):
         print('>>>>>>>>>>>>>> Missed file to {}'.format(dest_file))
 
 
-def crop_to_box(image_file_path, destination_dir="cropped", text_file_ext=".gt.txt"):
+def crop_to_box(image_file_path, destination_dir, text_file_ext):
     try:
         gt_text_file_path = image_file_path.replace(".jpg", ".txt")
         source_image_path = image_file_path
@@ -78,12 +78,11 @@ def prepare_calamari_dataset_from_icdar(in_path, out_path="cropped", text_file_e
     # for file in tqdm(in_files):
     #     print(file)
     #     crop_to_box(image_file_path=file, destination_dir="cropped")
-    # def crop_to_box_(file):
-    #     crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext)
+
+    crop_to_box_partial = partial(crop_to_box, destination_dir=out_path, text_file_ext=text_file_ext)
 
     with multiprocessing.Pool() as p:
-        r = list(tqdm(p.map(lambda file: crop_to_box(image_file_path=file, destination_dir=out_path, text_file_ext=text_file_ext),
-                            in_files), total=len(in_files)))
+        r = list(tqdm(p.imap(crop_to_box_partial, in_files), total=len(in_files)))
         # p.map(crop_to_box, in_files)
         # map list to target function
         # pool.map(task, multiprocess_list)
