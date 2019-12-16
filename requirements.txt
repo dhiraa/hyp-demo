@@ -1,4 +1,4 @@
-tensorflow_gpu==1.14
+tensorflow_gpu==1.15.0
 numpy
 tqdm
 fire
